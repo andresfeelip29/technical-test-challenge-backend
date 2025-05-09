@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: microservice-call-history
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost:5432}/${DATA_BASE:db_test}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:sasa}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  messages:
+    basename: validation-messages
+
+logging:
+  file:
+    path: /app/logs
+  level:
+    sql: debug
+
+
+
+server:
+  port: ${PORT:9002}
+

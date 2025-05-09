@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "0ab62c71-5756-4bb3-9389-a91215ee3f01",
+		"name": "tekton-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33096850"
+	},
+	"item": [
+		{
+			"name": "microservices-calculation",
+			"item": [
+				{
+					"name": "calculatePercentage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9001/api/v1/calculate/?firstData=4.5&secondData=7.1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9001",
+							"path": [
+								"api",
+								"v1",
+								"calculate",
+								""
+							],
+							"query": [
+								{
+									"key": "firstData",
+									"value": "4.5"
+								},
+								{
+									"key": "secondData",
+									"value": "7.1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "support-data-wiremock",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9003/api/v1/support",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9003",
+							"path": [
+								"api",
+								"v1",
+								"support"
+							],
+							"query": [
+								{
+									"key": "firstData",
+									"value": "4.1",
+									"disabled": true
+								},
+								{
+									"key": "secondData",
+									"value": "7.1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "microservices-call-history",
+			"item": [
+				{
+					"name": "create-history",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"createAt\" : \"20-02-13\",\r\n    \"pathEndpoint\": \"/api/v1/history\",\r\n    \"methodParameters\": \"1.2, 7.3\",\r\n    \"response\": \"500 - SERVER_INTERNAL_ERROR\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9002/api/v1/history",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9002",
+							"path": [
+								"api",
+								"v1",
+								"history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "call-history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9002/api/v1/history?page=0&size=6&sort=methodParameters&direction=desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9002",
+							"path": [
+								"api",
+								"v1",
+								"history"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "6"
+								},
+								{
+									"key": "sort",
+									"value": "methodParameters"
+								},
+								{
+									"key": "direction",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

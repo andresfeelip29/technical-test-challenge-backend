@@ -1,0 +1,55 @@
+version: "3.9"
+services:
+  postgres14:
+    container_name: postgres14
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: sasa
+      POSTGRES_DB: db_test
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - tekton
+  microservices-calculation:
+    container_name: microservices-calculation
+    image: andresfeelip29/microservices-calculation
+    ports:
+      - "9001:9001"
+      - "9003:9003"
+    environment:
+      PORT: 9001
+      CALL_HISTORY_URL: http://host.docker.internal:9002/api/v1
+      DATA_SUPPORT_URL: http://host.docker.internal:9003/api/v1
+    networks:
+      - tekton
+    depends_on:
+      - postgres14
+    restart: always
+  microservices-call-history:
+    container_name: microservices-call-history
+    image: andresfeelip29/microservices-call-history
+    ports:
+      - "9002:9002"
+    environment:
+      PORT: 9002
+      DB_HOST: postgres14:5432
+      DATA_BASE: db_test
+      DB_USERNAME: postgres
+      DB_PASSWORD: sasa
+    networks:
+      - tekton
+    depends_on:
+      - postgres14
+    restart: always
+
+
+volumes:
+  data-postgres:
+    name: data-postgres
+
+networks:
+  tekton:
+    name: tekton 
